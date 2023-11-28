@@ -73,6 +73,7 @@ import os
 import re
 import argparse
 from tqdm import tqdm
+import logging
 
 def format_description(description):
     # Remove empty lines at the beginning and end of the Description
@@ -93,6 +94,7 @@ def format_tag(tag):
     return tag
 
 def update_package_info(input_file_path, output_file_path):
+    logging.info(f"Processing file: {input_file_path}")
     with open(input_file_path, 'r') as file:
         # Read the entire content of the file
         content = file.read()
@@ -140,10 +142,27 @@ def format_all_packages(input_dir, output_dir):
                 relative_path = os.path.relpath(input_file_path, input_dir)
                 output_file_path = os.path.join(output_dir, relative_path)
 
+                # Log to check which file is being processed
+                logging.info(f"Processing file: {input_file_path}")
+
                 # Perform description and tag updates, and save the result to a new file
                 update_package_info(input_file_path, output_file_path)
                 
 def main():
+    # Get the directory of the script file
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Create the tmp folder in the same directory as the script file
+    tmp_dir = os.path.join(script_dir, 'tmp')
+    os.makedirs(tmp_dir, exist_ok=True)
+
+    # Create the complete path for the log file inside the tmp folder
+    log_file_path = os.path.join(tmp_dir, 'format_packages.log')
+
+    # Use logging lib to check any errors
+    logging.getLogger().setLevel(logging.INFO)
+    logging.basicConfig(filename=log_file_path, filemode='w', format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+
     # Set up command-line argument parsing
     parser = argparse.ArgumentParser(description="Format Parrot/Debian Packages files in a specified directory.")
     parser.add_argument("input_directory", help="Specify the input directory containing Packages files.")
