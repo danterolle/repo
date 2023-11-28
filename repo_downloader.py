@@ -12,6 +12,8 @@ import os
 import requests
 import argparse
 from tqdm import tqdm
+import logging
+import tempfile
 
 """
 download_packages: Download Packages files based on user selection.
@@ -33,19 +35,19 @@ def download_packages(base_url, repo_config, selected_codenames, selected_branch
         # Iterate over selected codenames
         for codename in selected_codenames:
             if codename not in repo_config["codenames"]:
-                print(f"Ignoring invalid codename: {codename}")
+                logging.warning(f"Ignoring invalid codename: {codename}")
                 continue
 
             # Iterate over selected branches
             for branch in selected_branches:
                 if branch not in repo_config["branches"]:
-                    print(f"Ignoring invalid branch: {branch}")
+                    logging.warning(f"Ignoring invalid branch: {branch}")
                     continue
 
                 # Iterate over selected architectures
                 for arch in selected_architectures:
                     if arch not in repo_config["architectures"]:
-                        print(f"Ignoring invalid architecture: {arch}")
+                        logging.warning(f"Ignoring invalid architecture: {arch}")
                         continue
 
                     # Build the URL for the Packages file
@@ -56,7 +58,7 @@ def download_packages(base_url, repo_config, selected_codenames, selected_branch
                     # Create the folder structure if it doesn't exist
                     os.makedirs(os.path.dirname(download_path), exist_ok=True)
 
-                    print(f"Downloading {url} to {download_path}")
+                    logging.info(f"Downloading {url} to {download_path} folder")
 
                     # Perform the GET request to download the Packages file
                     response = requests.get(url)
@@ -64,14 +66,28 @@ def download_packages(base_url, repo_config, selected_codenames, selected_branch
                         # Save the downloaded content to the local file
                         with open(download_path, "wb") as file:
                             file.write(response.content)
-                        print(f"Download successful\n")
+                        logging.info(f"Download successful\n")
                     else:
-                        print(f"Failed to download {url}\n")
+                        logging.error(f"Failed to download {url}\n")
 
                     # Update the tqdm progress bar
                     pbar.update(1)
 
 def main():
+    # Get the directory of the script file
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Create the tmp folder in the same directory as the script file
+    tmp_dir = os.path.join(script_dir, 'tmp')
+    os.makedirs(tmp_dir, exist_ok=True)
+
+    # Create the complete path for the log file inside the tmp folder
+    log_file_path = os.path.join(tmp_dir, 'repo_downloader.log')
+
+    # Use logging lib to check any errors
+    logging.getLogger().setLevel(logging.INFO)
+    logging.basicConfig(filename=log_file_path, filemode='w', format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+
     # Set up command-line argument parsing
     parser = argparse.ArgumentParser(description="Download Parrot Packages files from a specified repository.")
     parser.add_argument("--base-url", default="https://deb.parrot.sh/parrot/dists/", help="Specify a custom base URL.")
@@ -90,9 +106,9 @@ def main():
     }
 
     # Use selected values or default values from the repository config
-    selected_codenames = args.codenames or repo_config["codenames"]
-    selected_branches = args.branches or repo_config["branches"]
-    selected_architectures = args.architectures or repo_config["architectures"]
+    selected_codenames = args.codename or repo_config["codenames"]
+    selected_branches = args.branch or repo_config["branches"]
+    selected_architectures = args.architecture or repo_config["architectures"]
 
     # Call the function to download Packages files
     download_packages(args.base_url, repo_config, selected_codenames, selected_branches, selected_architectures)
