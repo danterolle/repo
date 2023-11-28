@@ -3,3 +3,4 @@ lory-updates/
 lory-backports/
 lory-security/
 .DS_STORE
+tmp/
