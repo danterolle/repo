@@ -15,17 +15,17 @@ from tqdm import tqdm
 import logging
 import tempfile
 
-"""
-download_packages: Download Packages files based on user selection.
-
-Args:
-    - base_url (str): The base URL of the Debian repository.
-    - repo_config (dict): Configuration of valid codenames, branches, and architectures.
-    - selected_codenames (list): User-selected codenames.
-    - selected_branches (list): User-selected branches.
-    - selected_architectures (list): User-selected architectures.
-"""
 def download_packages(base_url, repo_config, selected_codenames, selected_branches, selected_architectures):
+    """
+    Download Packages files based on user selection.
+
+    Args:
+        - base_url (str): The base URL of the Debian repository.
+        - repo_config (dict): Configuration of valid codenames, branches, and architectures.
+        - selected_codenames (list): User-selected codenames.
+        - selected_branches (list): User-selected branches.
+        - selected_architectures (list): User-selected architectures.
+    """
 
     # Count the total number of iterations for tqdm
     total_iterations = len(selected_codenames) * len(selected_branches) * len(selected_architectures)
@@ -74,7 +74,7 @@ def download_packages(base_url, repo_config, selected_codenames, selected_branch
                     pbar.update(1)
 
 def setup_logging():
-        # Get the directory of the script file
+    # Get the directory of the script file
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
     # Create the tmp folder in the same directory as the script file
