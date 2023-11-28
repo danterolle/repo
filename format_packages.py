@@ -131,15 +131,18 @@ def update_package_info(input_file_path, output_file_path):
         file.write(updated_content)
 
 def format_all_packages(input_dir, output_dir):
-    # Iterate over Packages files in the input directory
-    for filename in os.listdir(input_dir):
-        if filename.startswith("Packages"):
-            input_file_path = os.path.join(input_dir, filename)
-            output_file_path = os.path.join(output_dir, f"processed_{filename}")
-            
-            # Perform description and tag updates, and save the result to a new file
-            update_package_info(input_file_path, output_file_path)
+    # Iterate over all files in the input directory and its subdirectories
+    for root, _, files in os.walk(input_dir):
+        for filename in files:
+            if filename.startswith("Packages"):
+                input_file_path = os.path.join(root, filename)
+                # Output directory structure should mirror the input directory structure
+                relative_path = os.path.relpath(input_file_path, input_dir)
+                output_file_path = os.path.join(output_dir, relative_path)
 
+                # Perform description and tag updates, and save the result to a new file
+                update_package_info(input_file_path, output_file_path)
+                
 def main():
     # Set up command-line argument parsing
     parser = argparse.ArgumentParser(description="Format Parrot/Debian Packages files in a specified directory.")
