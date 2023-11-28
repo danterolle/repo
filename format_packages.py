@@ -147,9 +147,9 @@ def format_all_packages(input_dir, output_dir):
 
                 # Perform description and tag updates, and save the result to a new file
                 update_package_info(input_file_path, output_file_path)
-                
-def main():
-    # Get the directory of the script file
+
+def setup_logging():
+        # Get the directory of the script file
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
     # Create the tmp folder in the same directory as the script file
@@ -162,7 +162,8 @@ def main():
     # Use logging lib to check any errors
     logging.getLogger().setLevel(logging.INFO)
     logging.basicConfig(filename=log_file_path, filemode='w', format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
-
+                
+def main():
     # Set up command-line argument parsing
     parser = argparse.ArgumentParser(description="Format Parrot/Debian Packages files in a specified directory.")
     parser.add_argument("input_directory", help="Specify the input directory containing Packages files.")
@@ -175,4 +176,5 @@ def main():
     format_all_packages(args.input_directory, args.output_directory)
 
 if __name__ == "__main__":
+    setup_logging()
     main()
