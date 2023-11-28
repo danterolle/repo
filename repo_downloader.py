@@ -13,7 +13,6 @@ import requests
 import argparse
 from tqdm import tqdm
 import logging
-import tempfile
 
 def download_packages(base_url, repo_config, selected_codenames, selected_branches, selected_architectures):
     """
