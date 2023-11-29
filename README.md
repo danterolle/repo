@@ -12,6 +12,8 @@ So, these scripts allow you to download the Packages file from any Debian reposi
 
 In this project, each script has a specific task. A dedicated Makefile will probably be created in the future or everything will be rearranged with a better project structure.
 
+Each script should be executed in exactly the order in which they are shown in this README.
+
 ### `repo_downloader.py`
  
 This script is designed to download "Packages" files from a specific Debian repository, using information specified by the user through command-line arguments.
@@ -39,7 +41,41 @@ This script is designed to download "Packages" files from a specific Debian repo
 
 </details>
 
+#### Usage example
+
+```
+$ python3 repo_downloader.py --codename lory --branch main contrib --architecture arm64 i386
+```
+
+You can also have a helper printed on terminal:
+
+```
+$ python3 repo_downloader.py -h
+```
+
+```
+usage: repo_downloader.py [-h] [--base-url BASE_URL] [--codename CODENAME [CODENAME ...]]
+                          [--branch BRANCH [BRANCH ...]]
+                          [--architecture ARCHITECTURE [ARCHITECTURE ...]]
+
+Download Parrot Packages files from a specified repository.
+
+options:
+  -h, --help            show this help message and exit
+  --base-url BASE_URL   Specify a custom base URL.
+  --codename CODENAME [CODENAME ...]
+                        Specify codenames to download Packages for.
+  --branch BRANCH [BRANCH ...]
+                        Specify branches to download Packages for.
+  --architecture ARCHITECTURE [ARCHITECTURE ...]
+                        Specify architectures to download Packages for.
+```
+
 ### `format_packages.py`
+
+This script performs formatting operations on Parrot/Debian Packages files. It processes each package block within the input files, updates the description and tag fields, and saves the modified content to new output files.
+
+[What problem does it solve?](https://github.com/danterolle/repo/blob/781619acb1f3cff23c4b4247006e5bd3e339f487/format_packages.py#L5C7-L5C7)
 
 ### `json_parser.py`
 
