@@ -11,6 +11,7 @@ import json
 import argparse
 import logging
 from setup_logging import setup_logging
+from tqdm import tqdm 
 
 def parse_packages(package_content):
     """
@@ -97,7 +98,7 @@ def process_packages_file(input_path, output_directory, input_directory, recursi
     with open(output_path, 'w', encoding='utf-8') as json_file:
         json_file.write(json_data)
 
-    logging.info(f"JSON data saved to {output_path}.")
+    logging.info(f"JSON data saved to {output_path}")
 
 def main():
     parser = argparse.ArgumentParser(description="Parse multiple Packages files and save JSON outputs.")
@@ -116,13 +117,13 @@ def main():
 
     # Process each Packages file in the input directory
     for root, _, files in os.walk(args.input_directory):
-        for filename in files:
+        for filename in tqdm(files, desc="Processing Packages files", unit="file"):
             if filename.endswith('Packages'):
                 input_path = os.path.join(root, filename)
                 logging.info(f"Processing file: {input_path}")
                 process_packages_file(input_path, args.output_directory, args.input_directory, args.recursive)
 
-    logging.info(f"All Packages files in {args.input_directory} have been processed. JSON outputs saved to {args.output_directory}.")
+    logging.info(f"All Packages files in {args.input_directory} have been processed. JSON outputs saved to {args.output_directory}")
 
 if __name__ == "__main__":
     setup_logging('json_parser.log')
