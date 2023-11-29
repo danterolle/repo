@@ -13,6 +13,7 @@ import requests
 import argparse
 from tqdm import tqdm
 import logging
+from setup_logging import setup_logging
 
 def download_packages(base_url, repo_config, selected_codenames, selected_branches, selected_architectures):
     """
@@ -72,23 +73,6 @@ def download_packages(base_url, repo_config, selected_codenames, selected_branch
                     # Update the tqdm progress bar
                     pbar.update(1)
 
-def setup_logging():
-    # Get the directory of the script file
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-
-    # Create the tmp folder in the same directory as the script file
-    tmp_dir = os.path.join(script_dir, 'tmp')
-    os.makedirs(tmp_dir, exist_ok=True)
-
-    # Create the complete path for the log file inside the tmp folder
-    log_file_path = os.path.join(tmp_dir, 'repo_downloader.log')
-
-    # Use logging lib to check any errors
-    logging.getLogger().setLevel(logging.INFO)
-    logging.basicConfig(filename=log_file_path, filemode='w', format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
-
-    logging.info(f"Logging initialized. Log file: {log_file_path}")
-
 def main():
     # Set up command-line argument parsing
     parser = argparse.ArgumentParser(description="Download Parrot Packages files from a specified repository.")
@@ -116,5 +100,5 @@ def main():
     download_packages(args.base_url, repo_config, selected_codenames, selected_branches, selected_architectures)
 
 if __name__ == "__main__":
-    setup_logging()
+    setup_logging('repo_downloader.log')
     main()

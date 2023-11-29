@@ -74,6 +74,7 @@ import re
 import argparse
 from tqdm import tqdm
 import logging
+from setup_logging import setup_logging
 
 def format_description(description):
     # Remove empty lines at the beginning and end of the Description
@@ -147,23 +148,6 @@ def format_all_packages(input_dir, output_dir):
 
                 # Perform description and tag updates, and save the result to a new file
                 update_package_info(input_file_path, output_file_path)
-
-def setup_logging():
-        # Get the directory of the script file
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-
-    # Create the tmp folder in the same directory as the script file
-    tmp_dir = os.path.join(script_dir, 'tmp')
-    os.makedirs(tmp_dir, exist_ok=True)
-
-    # Create the complete path for the log file inside the tmp folder
-    log_file_path = os.path.join(tmp_dir, 'format_packages.log')
-
-    # Use logging lib to check any errors
-    logging.getLogger().setLevel(logging.INFO)
-    logging.basicConfig(filename=log_file_path, filemode='w', format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
-
-    logging.info(f"Logging initialized. Log file: {log_file_path}")
                 
 def main():
     # Set up command-line argument parsing
@@ -178,5 +162,5 @@ def main():
     format_all_packages(args.input_directory, args.output_directory)
 
 if __name__ == "__main__":
-    setup_logging()
+    setup_logging('format_packages.log')
     main()

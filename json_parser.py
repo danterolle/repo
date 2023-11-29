@@ -10,6 +10,7 @@ import re
 import json
 import argparse
 import logging
+from setup_logging import setup_logging
 
 def parse_packages(package_content):
     """
@@ -98,23 +99,6 @@ def process_packages_file(input_path, output_directory, input_directory, recursi
 
     logging.info(f"JSON data saved to {output_path}.")
 
-def setup_logging():
-    # Get the directory of the script file
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-
-    # Create the tmp folder in the same directory as the script file
-    tmp_dir = os.path.join(script_dir, 'tmp')
-    os.makedirs(tmp_dir, exist_ok=True)
-
-    # Create the complete path for the log file inside the tmp folder
-    log_file_path = os.path.join(tmp_dir, 'json_parser.log')
-
-    # Use logging lib to check any errors
-    logging.getLogger().setLevel(logging.INFO)
-    logging.basicConfig(filename=log_file_path, filemode='w', format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
-
-    logging.info(f"Logging initialized. Log file: {log_file_path}")
-
 def main():
     parser = argparse.ArgumentParser(description="Parse multiple Packages files and save JSON outputs.")
     parser.add_argument("input_directory", help="Path to the root directory containing Packages files.")
@@ -141,5 +125,5 @@ def main():
     logging.info(f"All Packages files in {args.input_directory} have been processed. JSON outputs saved to {args.output_directory}.")
 
 if __name__ == "__main__":
-    setup_logging()
+    setup_logging('json_parser.log')
     main()
