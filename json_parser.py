@@ -9,6 +9,7 @@ import os
 import re
 import json
 import argparse
+import logging
 
 def parse_packages(package_content):
     """
@@ -95,7 +96,24 @@ def process_packages_file(input_path, output_directory, input_directory, recursi
     with open(output_path, 'w', encoding='utf-8') as json_file:
         json_file.write(json_data)
 
-    print(f"JSON data saved to {output_path}.")
+    logging.info(f"JSON data saved to {output_path}.")
+
+def setup_logging():
+    # Get the directory of the script file
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Create the tmp folder in the same directory as the script file
+    tmp_dir = os.path.join(script_dir, 'tmp')
+    os.makedirs(tmp_dir, exist_ok=True)
+
+    # Create the complete path for the log file inside the tmp folder
+    log_file_path = os.path.join(tmp_dir, 'json_parser.log')
+
+    # Use logging lib to check any errors
+    logging.getLogger().setLevel(logging.INFO)
+    logging.basicConfig(filename=log_file_path, filemode='w', format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+
+    logging.info(f"Logging initialized. Log file: {log_file_path}")
 
 def main():
     parser = argparse.ArgumentParser(description="Parse multiple Packages files and save JSON outputs.")
@@ -106,7 +124,7 @@ def main():
 
     # Verify that the input directory exists
     if not os.path.exists(args.input_directory) or not os.path.isdir(args.input_directory):
-        print("Error: The specified input directory does not exist.")
+        logging.error("Error: The specified input directory does not exist.")
         return
 
     # Create the output directory if it doesn't exist
@@ -117,9 +135,11 @@ def main():
         for filename in files:
             if filename.endswith('Packages'):
                 input_path = os.path.join(root, filename)
+                logging.info(f"Processing file: {input_path}")
                 process_packages_file(input_path, args.output_directory, args.input_directory, args.recursive)
 
-    print(f"All Packages files in {args.input_directory} have been processed. JSON outputs saved to {args.output_directory}.")
+    logging.info(f"All Packages files in {args.input_directory} have been processed. JSON outputs saved to {args.output_directory}.")
 
 if __name__ == "__main__":
+    setup_logging()
     main()
