@@ -14,6 +14,8 @@ In this project, each script has a specific task. A dedicated Makefile will prob
 
 Each script should be executed in exactly the order in which they are shown in this README.
 
+In addition, each time these scripts are used, a log file is created in a temporary folder called `tmp` that will contain their execution status 
+
 ### `repo_downloader.py`
  
 This script is designed to download "Packages" files from a specific Debian repository, using information specified by the user through command-line arguments.
@@ -71,8 +73,6 @@ options:
                         Specify architectures to download Packages for.
 ```
 
-Also, each time this script is used, a log file will be created on a temporary folder called `tmp` that will contain the current state of this specific script.
-
 ### `format_packages.py`
 
 This script performs formatting operations on Parrot/Debian Packages files. It processes each package block within the input files, updates the description and tag fields, and saves the modified content to new output files.
@@ -109,8 +109,6 @@ options:
   -h, --help        show this help message and exit
 ```
 
-Also, each time this script is used, a log file will be created on a temporary folder called `tmp` that will contain the current state of this specific script.
-
 ### `json_parser.py`
 
 This script (recursively) processes a specified root directory, identifies "Packages" files within it, extracts information from these files, and saves the parsed data in JSON format. The resulting JSON files are organized in a specified output directory maintaining the directory structure of the input. 
@@ -145,8 +143,6 @@ options:
   -h, --help        show this help message and exit
   --recursive       Recursively process subdirectories.
 ```
-
-Also, each time this script is used, a log file will be created on a temporary folder called `tmp` that will contain the current state of this specific script.
 
 ### `server.py`
 
