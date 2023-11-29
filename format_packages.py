@@ -162,6 +162,8 @@ def setup_logging():
     # Use logging lib to check any errors
     logging.getLogger().setLevel(logging.INFO)
     logging.basicConfig(filename=log_file_path, filemode='w', format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+
+    logging.info(f"Logging initialized. Log file: {log_file_path}")
                 
 def main():
     # Set up command-line argument parsing
