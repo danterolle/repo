@@ -71,7 +71,7 @@ options:
                         Specify architectures to download Packages for.
 ```
 
-Also, each time this script is used, a log file will be created on a temporary folder called tmp that will contain the current state of this specific script.
+Also, each time this script is used, a log file will be created on a temporary folder called `tmp` that will contain the current state of this specific script.
 
 ### `format_packages.py`
 
@@ -109,8 +109,45 @@ options:
   -h, --help        show this help message and exit
 ```
 
-Also, each time this script is used, a log file will be created on a temporary folder called tmp that will contain the current state of this specific script.
+Also, each time this script is used, a log file will be created on a temporary folder called `tmp` that will contain the current state of this specific script.
 
 ### `json_parser.py`
 
+This script (recursively) processes a specified root directory, identifies "Packages" files within it, extracts information from these files, and saves the parsed data in JSON format. The resulting JSON files are organized in a specified output directory maintaining the directory structure of the input. 
+
+<details>
+  <summary>Command line arguments</summary>
+
+  `input_directory` allows the user to select a directory where the Packages files are located.
+
+  `output_directory` allows the user to select the output directory where the *Packages.json* files will be placed.
+
+</details>
+
+#### Usage example
+
+```
+$ python3 json_parser.py --recursive lory/ output/ 
+```
+
+You can also have a helper printed on terminal by typing:
+
+```
+usage: json_parser.py [-h] [--recursive] input_directory output_directory
+
+Parse multiple Packages files and save JSON outputs.
+
+positional arguments:
+  input_directory   Path to the root directory containing Packages files.
+  output_directory  Path to the directory for saving JSON outputs.
+
+options:
+  -h, --help        show this help message and exit
+  --recursive       Recursively process subdirectories.
+```
+
+Also, each time this script is used, a log file will be created on a temporary folder called `tmp` that will contain the current state of this specific script.
+
 ### `server.py`
+
+TODO
