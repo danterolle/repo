@@ -66,9 +66,6 @@ Priority: optional
 Filename: pool/main/0/0ad/0ad_0.0.26-3_amd64.deb
 """
 
-# Usage example: 
-# python3 format_packages.py lory/main/binary-amd64/ lory/main/binary-amd64/
-
 import os
 import re
 import argparse
