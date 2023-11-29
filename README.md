@@ -18,8 +18,6 @@ In this project, each script has a specific task:
   <details>
     <summary>Command line arguments</summary>
 
-  &nbsp;
-
   `--base-url` allows the user to specify a custom base URL for the Debian repository. The default URL is **https://deb.parrot.sh/parrot/dists/**
 
   `--codename` allows the user to specify one or more Parrot/Debian name codes for which to download "Packages" files. In Parrot, could be **lory**.
@@ -29,8 +27,6 @@ In this project, each script has a specific task:
    * contrib
    * non-free
    * non-free-firmware
-
-   &nbsp;
 
   `--architecture` allows the user to specify one or more architectures (it is necessary to keep this format as it is standard for the repository itself):
    * binary-amd64
