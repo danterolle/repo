@@ -47,7 +47,7 @@ This script is designed to download "Packages" files from a specific Debian repo
 $ python3 repo_downloader.py --codename lory --branch main contrib --architecture arm64 i386
 ```
 
-You can also have a helper printed on terminal:
+You can also have a helper printed on terminal by typing:
 
 ```
 $ python3 repo_downloader.py -h
@@ -71,11 +71,45 @@ options:
                         Specify architectures to download Packages for.
 ```
 
+Also, each time this script is used, a log file will be created on a temporary folder called tmp that will contain the current state of this specific script.
+
 ### `format_packages.py`
 
 This script performs formatting operations on Parrot/Debian Packages files. It processes each package block within the input files, updates the description and tag fields, and saves the modified content to new output files.
 
 [What problem does it solve?](https://github.com/danterolle/repo/blob/781619acb1f3cff23c4b4247006e5bd3e339f487/format_packages.py#L5C7-L5C7)
+
+<details>
+  <summary>Command line arguments</summary>
+
+  `input_directory` allows the user to select a directory where the correction is to take place. It is recursive.
+
+  `output_directory` allows the user to select the output directory where the processed files will be created.
+
+</details>
+
+#### Usage example
+
+```
+$ python3 format_packages.py lory/ lory/
+```
+
+You can also have a helper printed on terminal by typing:
+
+```
+usage: format_packages.py [-h] input_directory output_directory
+
+Format Parrot/Debian Packages files in a specified directory.
+
+positional arguments:
+  input_directory   Specify the input directory containing Packages files.
+  output_directory  Specify the output directory for processed Packages files.
+
+options:
+  -h, --help        show this help message and exit
+```
+
+Also, each time this script is used, a log file will be created on a temporary folder called tmp that will contain the current state of this specific script.
 
 ### `json_parser.py`
 
