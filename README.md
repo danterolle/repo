@@ -10,33 +10,37 @@ So, these scripts allow you to download the Packages file from any Debian reposi
 
 ## Getting started
 
-In this project, each script has a specific task:
+In this project, each script has a specific task. A dedicated Makefile will probably be created in the future or everything will be rearranged with a better project structure.
 
-* `repo_downloader.py`   
-  This script is designed to download "Packages" files from a specific Debian repository, using information specified by the user through command-line arguments.
+### `repo_downloader.py`
+ 
+This script is designed to download "Packages" files from a specific Debian repository, using information specified by the user through command-line arguments.
 
-  <details>
-    <summary>Command line arguments</summary>
+<details>
+  <summary>Command line arguments</summary>
 
   `--base-url` allows the user to specify a custom base URL for the Debian repository. The default URL is **https://deb.parrot.sh/parrot/dists/**
 
   `--codename` allows the user to specify one or more Parrot/Debian name codes for which to download "Packages" files. In Parrot, could be **lory**.
 
   `--branch` allows the user to specify one or more repository branches, for instance: 
-   * main
-   * contrib
-   * non-free
-   * non-free-firmware
+    
+    main
+    contrib
+    non-free
+    non-free-firmware
 
   `--architecture` allows the user to specify one or more architectures (it is necessary to keep this format as it is standard for the repository itself):
-   * binary-amd64
-   * binary-arm64
-   * binary-armhf
-   * binary-i386
+    
+    binary-amd64
+    binary-arm64
+    binary-armhf
+    binary-i386
 
-  </details>
+</details>
 
-* format_packages.py
+### `format_packages.py`
 
-* json_parser.py
-* server.py
+### `json_parser.py`
+
+### `server.py`
