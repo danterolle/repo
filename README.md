@@ -146,4 +146,23 @@ options:
 
 ### `server.py`
 
-TODO
+This script implements a FastAPI server that provides an API endpoint for retrieving information about packages from a repository, based on user-provided query parameters.
+
+It's still being evaluated and from a security point of view it could be improved.
+
+#### Usage example
+
+Start the app
+```
+$ uvicorn server:app --reload
+```
+
+Return the complete list of packages for a given branch and architecture
+```
+$ curl -X GET "http://127.0.0.1:8000/packages/?architecture=amd64&branch=main"
+```
+
+Return only the information of a specific package
+```
+curl -X GET "http://127.0.0.1:8000/packages/?package_name=0ad&architecture=amd64&branch=main"
+```
