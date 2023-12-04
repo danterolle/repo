@@ -4,7 +4,7 @@ PYTHON = python3
 .PHONY: create-venv activate-venv init run clean
 
 create-venv:
-	python3 -m venv $(VENV_NAME)
+	$(PYTHON) -m venv $(VENV_NAME)
 
 activate-venv:
 	source $(VENV_NAME)/bin/activate
