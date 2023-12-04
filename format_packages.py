@@ -126,7 +126,7 @@ def update_package_info(input_file_path, output_file_path):
         # Join the package blocks back together
         updated_content = '\n\n'.join(package_blocks)
 
-    # Scrivi il nuovo contenuto nel file di output
+    # Write the new content to the output file
     with open(output_file_path, 'w') as file:
         file.write(updated_content)
 
