@@ -21,3 +21,5 @@ clean:
 	rm -rf __pycache__/
 	rm -rf tmp/
 	rm -rf $(VENV_NAME)/
+	rm -rf lory/
+	rm -rf output/
